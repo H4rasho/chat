@@ -19,10 +19,10 @@ const io = new Server(httpServer, {
 
 io.on("connection", (socket) => {
   console.log("a user connected");
-  socket.on("ping", () => {
-    socket.emit("pong");
+  socket.on("chat message", (value) => {
+    console.log(socket.id);
+    socket.broadcast.emit("chat message", value);
   });
-  socket.emit("hello", "world");
 });
 
 httpServer.listen(3000, () => {
