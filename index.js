@@ -2,8 +2,14 @@ import express from "express";
 
 import { createServer } from "http";
 import { Server } from "socket.io";
+import router from "./router.js";
+import { redisClient } from "./src/redis/connection.js";
 
 const app = express();
+app.use(express.json());
+await redisClient.connect();
+
+app.use("/api", router);
 
 app.get("/", (req, res) => {
   res.send("Hello world");
